@@ -180,6 +180,7 @@ public class AccountController {
         accountResponseDTO.setTwitter(account.getTwitter());
         accountResponseDTO.setFacebook(account.getFacebook());
         accountResponseDTO.setPassword(account.getPassword());
+        accountResponseDTO.setToken(account.getToken());
         return accountResponseDTO;
     }
 
