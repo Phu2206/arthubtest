@@ -196,9 +196,10 @@ public class AccountController {
     }
 
     @PostMapping("/accounts/checkToken")
-    public ResponseEntity<ResponeAccountDTO> checkToken(@RequestParam int id, @RequestParam String token) {
-        ResponeAccountDTO userAccount =fromAccount(accountRepository.findById(id).orElseThrow());
-        if (userAccount != null) {
+    public ResponseEntity<ResponeAccountDTO> checkToken2(@RequestParam int id, @RequestParam String token) {
+        Optional<Account> optionalAccount = accountRepository.findById(id);
+        if (optionalAccount.isPresent()) {
+            ResponeAccountDTO userAccount = fromAccount(optionalAccount.get());
             if (userAccount.getToken().equals(token)) {
                 int updateToken = accountRepository.updateToken(id);
                 return new ResponseEntity<>(HttpStatus.OK);
@@ -209,6 +210,7 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     public boolean sendMailToReceiver(String email, String token) throws AppServiceExeption, IOException {
         String messageBody = "";
