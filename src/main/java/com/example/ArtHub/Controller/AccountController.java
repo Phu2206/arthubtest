@@ -232,11 +232,11 @@ public class AccountController {
     @PostMapping("/accounts")
     public ResponseEntity<ResponeAccountDTO> createAccount(@RequestBody Account account) {
         try {
-            ResponeAccountDTO accountbyEmail = fromAccount(accountRepository.findByEmail(account.getEmail()).orElseThrow());
-            ResponeAccountDTO accountbyUsername = fromAccount(accountRepository.findByUsername(account.getUsername()).orElseThrow());
-            if (accountbyEmail != null) {
+            Optional<Account> accountbyEmail = accountRepository.findByEmail(account.getEmail());
+            Optional<Account> accountbyUsername = accountRepository.findByUsername(account.getUsername());
+            if (!accountbyEmail.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN); //email exist
-            } else if (accountbyUsername != null) {
+            } else if (!accountbyUsername.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT); //username exist
             } else {
                 if(account.getToken() != null)//send otp
@@ -262,10 +262,13 @@ public class AccountController {
                 return new ResponseEntity<>(fromAccount(_account), HttpStatus.CREATED);
             }
 
-        } catch (Exception | AppServiceExeption e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (AppServiceExeption e) {
+            throw new RuntimeException(e);
         }
     }
+
 
     @PutMapping("/accounts")
     public ResponseEntity<ResponeAccountDTO> updateAccount(@RequestBody Account account) {
