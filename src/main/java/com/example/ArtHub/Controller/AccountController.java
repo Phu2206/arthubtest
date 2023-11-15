@@ -67,16 +67,19 @@ public class AccountController {
         return new ResponseEntity<>(new ResponeObject("Ok","Connect to server successfully!",null),HttpStatus.OK);
     }
     @GetMapping("/accounts")
-    public ResponseEntity<List<ResponeAccountDTO>> getAllAccounts(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<ResponeAccountDTO>> getAllAccounts2(@RequestParam(required = false) String name) {
         try {
-            List<ResponeAccountDTO> accounts = new ArrayList<ResponeAccountDTO>();
+            List<ResponeAccountDTO> accounts;
 
-            if (name == null)
-
-                accountRepository.findAll().stream().map(account -> accounts.add(fromAccount(account)));
-
-            else
-                accountRepository.findByUsernameContaining(name).stream().map(account -> accounts.add(fromAccount(account)));
+            if (name == null) {
+                accounts = accountRepository.findAll().stream()
+                        .map(account -> fromAccount(account))
+                        .collect(Collectors.toList());
+            } else {
+                accounts = accountRepository.findByUsernameContaining(name).stream()
+                        .map(account -> fromAccount(account))
+                        .collect(Collectors.toList());
+            }
 
             if (accounts.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -87,6 +90,7 @@ public class AccountController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PostMapping("/accounts/GoogleLogin")
     public ResponseEntity<ResponseAccountDTO> LoginGoogleAccount(@RequestParam String email) {
