@@ -13,6 +13,27 @@ public class ResponseLearnerDTO {
     private Integer senderId;
     private String message;
 
+    private ResponeCourseDTO course;
+
+    private ResponeAccountDTO account;
+
+
+    public ResponeCourseDTO getCourse() {
+        return course;
+    }
+
+    public void setCourse(ResponeCourseDTO course) {
+        this.course = course;
+    }
+
+    public ResponeAccountDTO getAccount() {
+        return account;
+    }
+
+    public void setAccount(ResponeAccountDTO account) {
+        this.account = account;
+    }
+
     public Integer getSenderId() {
         return senderId;
     }

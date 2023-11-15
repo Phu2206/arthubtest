@@ -151,6 +151,25 @@ public class ServiceOfCourse implements ICourseService {
         return courseDTO;
     }
 
+    public  ResponeCourseDTO fromCourseToResponeCourseDTO3(Course course) {
+        ResponeCourseDTO courseDTO = new ResponeCourseDTO();
+        courseDTO.setId(course.getId());
+        courseDTO.setName(course.getName());
+        courseDTO.setDescription(course.getDescription());
+        courseDTO.setIntroduction(course.getIntroduction());
+        courseDTO.setLevel(course.getLevel());
+        courseDTO.setLanguage(course.getLanguage());
+        courseDTO.setPrice(course.getPrice());
+        courseDTO.setCoupon(course.getCoupon());
+        courseDTO.setPassed(course.getPassed());
+        courseDTO.setStatus(course.getStatus());
+        courseDTO.setImage(course.getImage());
+        courseDTO.setDate(course.getDate());
+        courseDTO.setAccountId(course.getAccount().getId());
+
+        return courseDTO;
+    }
+
 
     @Override
     public  ResponeCourseDTO fromCourseToResponeCourseDTO(Course course) {
@@ -184,6 +203,9 @@ public class ServiceOfCourse implements ICourseService {
         courseDTO.setAvg(courseRateRepository.avgCourseRateByCourseId(course.getId()));
         return courseDTO;
     }
+
+
+
 
 
     public ResponeCourseProfitDTO fromCourseToCourseProfitDTO(Course course)

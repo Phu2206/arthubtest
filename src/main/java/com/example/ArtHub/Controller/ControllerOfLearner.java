@@ -40,6 +40,9 @@ public class ControllerOfLearner implements ILearnerController {
     CourseRepository courseRepository;
 
     @Autowired
+    ServiceOfCourse serviceOfCourse;
+
+    @Autowired
     AccountRepository accountRepository;
 
 
@@ -89,6 +92,8 @@ public class ControllerOfLearner implements ILearnerController {
         learnerDTO.setStatus(learner.getStatus());
         learnerDTO.setSenderId(learner.getSenderId());
         learnerDTO.setMessage(learner.getMessage());
+        learnerDTO.setCourse(serviceOfCourse.fromCourseToResponeCourseDTO3(learner.getCourse()));
+        learnerDTO.setAccount(fromAccount(learner.getAccount()));
         return learnerDTO;
 
 
